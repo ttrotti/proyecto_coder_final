@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Lista</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    </head>
+  <style>
+    #product-list {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 1em;
+    }
+  </style>
+    <body class="container">
+        <div id="error" class="d-none alert alert-danger p-3 m-4" role="alert"></div>
+        <div id="product-list" class="m-4">
+        </div>
+        <form id="new-product-form">
+            <div class="form-group card bg-light m-4 p-3">
+                <label class="pb-2">
+                    Title:
+                    <input type="text" id="title" />
+                </label>
+                <label class="pb-2">
+                    Price:
+                    <input type="number" id="price" />
+                </label>
+                <label class="pb-2">
+                    Thumbnail:
+                    <input type="text" id="thumbnail" />
+                </label>
+                <label class="pb-2">
+                    Stock:
+                    <input type="number" id="stock" />
+                </label>
+                <label class="pb-2">
+                    Descripción:
+                    <input type="text" id="description" />
+                </label>
+                <button class="btn btn-primary" type="submit">Enviar</button>
+            </div>
+        </form>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="app.js"></script>
+        <script>
+            getProducts()
+        </script>
+    </body>
+</html>
