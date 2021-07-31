@@ -1,4 +1,5 @@
 import ProductFirebase from '../Products/ProductFirebase.js'
+import logger from '../../lib/logger.js'
 class Cart {
     constructor(db) {
         this.carts = db.collection("carts")
@@ -25,7 +26,7 @@ class Cart {
             return response
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -52,11 +53,11 @@ class Cart {
                 cartObj.products.push(newItem)
                 await this.update(cartObj, cart[0].id)
             }
-            console.log("Producto añadido con éxito")
+            logger.trace("Producto añadido con éxito")
             return await this.get()
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -69,7 +70,7 @@ class Cart {
             return await this.get(id);
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -81,11 +82,11 @@ class Cart {
             if (!deleted) return false
             cartObj.products = cartObj.products.filter((product) => product.id !== productId)
             await this.update(cartObj, cartObj.id)
-            console.log("Producto eliminado del carrito con éxito")
+            logger.trace("Producto eliminado del carrito con éxito")
             return deleted;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

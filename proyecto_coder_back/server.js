@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors'
+import logger from './lib/logger.js'
 
 import productRouter from './routers/prodRouter.js'
 import cartRouter from './routers/cartRouter.js'
@@ -18,7 +19,7 @@ app.use('/api/productos', productRouter);
 
 const PORT = 8080;
 app.listen(PORT, () => {
-    console.log(`Servidor escuchando en el puerto ${PORT}`)
+    logger.info(`Servidor escuchando en el puerto ${PORT}`)
 });
 
-app.on('error', err => console.log("Error message:" + err))
+app.on('error', err => logger.error("Error message:" + err))

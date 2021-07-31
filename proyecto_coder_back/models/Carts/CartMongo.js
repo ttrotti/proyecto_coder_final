@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import Product from '../Products/ProductMongo.js'
+import logger from '../../lib/logger.js'
 
 const cartSchema = new mongoose.Schema({
     timestamp: {
@@ -21,7 +22,7 @@ class Cart {
             return carts.findById(id)
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -49,7 +50,7 @@ class Cart {
             return await this.get()
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -59,7 +60,7 @@ class Cart {
             return await this.get(id);
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -71,11 +72,11 @@ class Cart {
             if (!deleted) return false
             cartObj.products = cartObj.products.filter((product) => product._id !== deleted._id);
             await this.update(cartObj, cartObj._id)
-            console.log("Producto eliminado del carrito con éxito")
+            logger.trace("Producto eliminado del carrito con éxito")
             return deleted;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

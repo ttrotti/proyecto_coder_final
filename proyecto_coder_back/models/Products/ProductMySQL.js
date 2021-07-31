@@ -1,4 +1,5 @@
 import { db } from '../../DB/db.js'
+import logger from '../../lib/logger.js'
 
 class Product {
    async get(id, title, code, minPrice, maxPrice , minStock, maxStock) {
@@ -11,7 +12,7 @@ class Product {
             return db.from('productos').select()
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -39,7 +40,7 @@ class Product {
             return product
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -49,7 +50,7 @@ class Product {
             return await this.get(id);
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -60,7 +61,7 @@ class Product {
             return deleted
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

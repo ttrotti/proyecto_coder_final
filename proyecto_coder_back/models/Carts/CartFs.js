@@ -1,5 +1,6 @@
 import fs from 'fs';
 import Product from '../Products/ProductFs.js'
+import logger from '../../lib/logger.js'
 
 class Cart {
     constructor() {
@@ -21,7 +22,7 @@ class Cart {
             return cart
         }
         catch (err) {
-            console.log(err)
+            logger.error(err)
         }
     };
     
@@ -42,11 +43,11 @@ class Cart {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(cart, null, "\t")
             )
-            console.log("Producto añadido al carrito con éxito")
+            logger.trace("Producto añadido al carrito con éxito")
             return cart
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -63,11 +64,11 @@ class Cart {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(cart, null, "\t")
             )
-            console.log("Producto eliminado del carrito con éxito")
+            logger.trace("Producto eliminado del carrito con éxito")
             return filtered;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

@@ -1,3 +1,4 @@
+import logger from '../../lib/logger.js'
 let PRODUCTS = []
 
 class Product {
@@ -12,7 +13,7 @@ class Product {
             return PRODUCTS
         }
         catch (err) {
-            console.log(err)
+            logger.error(err)
         }
     };
     
@@ -53,11 +54,11 @@ class Product {
             data.id = PRODUCTS.length + 1;
             data.timestamp = Date.now();
             PRODUCTS.push(data)
-            console.log("Producto guardado con éxito")
+            logger.trace("Producto guardado con éxito")
             return data
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -74,7 +75,7 @@ class Product {
             return filtered;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -85,11 +86,11 @@ class Product {
     
             PRODUCTS = PRODUCTS.filter((product) => product.id !== parseInt(id));
 
-            console.log("Producto borrado con éxito")
+            logger.trace("Producto borrado con éxito")
             return filtered;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

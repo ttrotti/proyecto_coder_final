@@ -1,4 +1,5 @@
 import { sqliteDB as db } from '../../DB/db.js'
+import logger from '../../lib/logger.js'
 
 /*
 db.schema.createTable('productos', table => {
@@ -25,7 +26,7 @@ class Product {
             return db.from('productos').select()
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
  
@@ -53,7 +54,7 @@ class Product {
              return product
          }
          catch(err) {
-             console.log(err)
+             logger.error(err)
          }
      }
  
@@ -63,7 +64,7 @@ class Product {
              return await this.get(id);
          }
          catch(err) {
-             console.log(err)
+             logger.error(err)
          }
      }
  
@@ -74,7 +75,7 @@ class Product {
              return deleted
          }
          catch(err) {
-             console.log(err)
+             logger.error(err)
          }
      }
  }

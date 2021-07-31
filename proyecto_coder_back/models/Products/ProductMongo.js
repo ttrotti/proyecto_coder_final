@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import logger from '../../lib/logger.js'
 
 const productSchema = new mongoose.Schema({
     title: {
@@ -41,7 +42,7 @@ class Product {
             return products.find({})
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -69,7 +70,7 @@ class Product {
             return product
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -79,7 +80,7 @@ class Product {
             return await this.get(id);
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -90,7 +91,7 @@ class Product {
             return deleted
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

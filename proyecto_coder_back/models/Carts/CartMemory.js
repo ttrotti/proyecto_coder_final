@@ -1,4 +1,5 @@
 import Product from '../Products/ProductMemory.js'
+import logger from '../../lib/logger.js'
 let CART = {};
 
 class Cart {
@@ -17,7 +18,7 @@ class Cart {
             return CART
         }
         catch (err) {
-            console.log(err)
+            logger.error(err)
         }
     };
     
@@ -34,11 +35,11 @@ class Cart {
             if(!newItem) return false
             CART.products.push(newItem)
 
-            console.log("Producto añadido al carrito con éxito")
+            logger.trace("Producto añadido al carrito con éxito")
             return CART
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -50,11 +51,11 @@ class Cart {
             CART.products = CART.products.filter((product) => product.id !== parseInt(productId));
 
 
-            console.log("Producto eliminado del carrito con éxito")
+            logger.trace("Producto eliminado del carrito con éxito")
             return filtered;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

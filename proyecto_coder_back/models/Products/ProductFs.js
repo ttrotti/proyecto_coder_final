@@ -1,4 +1,5 @@
 import fs from 'fs';
+import logger from '../../lib/logger.js'
 
 class Product {
     constructor() {
@@ -18,7 +19,7 @@ class Product {
             return files
         }
         catch (err) {
-            console.log(err)
+            logger.error(err)
         }
     };
     
@@ -64,11 +65,11 @@ class Product {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(files, null, "\t")
             )
-            console.log("Producto guardado con éxito")
+            logger.trace("Producto guardado con éxito")
             return data
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -89,7 +90,7 @@ class Product {
             return filtered;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -104,11 +105,11 @@ class Product {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(files, null, "\t")
             )
-            console.log("Producto borrado con éxito")
+            logger.trace("Producto borrado con éxito")
             return filtered;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

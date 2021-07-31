@@ -1,3 +1,4 @@
+import logger from '../../lib/logger.js'
 class Product {
     constructor(db) {
         this.products = db.collection("productos")
@@ -23,11 +24,10 @@ class Product {
                 thumbnail: doc.data().thumbnail,
                 stock: doc.data().stock,
             }))
-            console.log(response)
             return response
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -55,7 +55,7 @@ class Product {
             return product
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -66,7 +66,7 @@ class Product {
             return await this.get(id);
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -78,7 +78,7 @@ class Product {
             return deleted
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

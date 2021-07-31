@@ -1,5 +1,6 @@
 import { db } from '../../DB/db.js'
 import Product from '../Products/ProductMySQL.js'
+import logger from '../../lib/logger.js'
 
 // db.schema.createTable('cart', table => {
 //     table.increments('id')
@@ -19,7 +20,7 @@ class Cart {
             return db.from('cart').where('id', id)
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     };
     
@@ -50,11 +51,11 @@ class Cart {
                 })
             }
             
-            console.log("Producto añadido al carrito con éxito")
+            logger.trace("Producto añadido al carrito con éxito")
             return await this.get()
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 
@@ -70,11 +71,11 @@ class Cart {
             await db.table('cart').where({id: cartObj.id}).update({
                 products: cartObj.products
             })
-            console.log("Producto eliminado del carrito con éxito")
+            logger.trace("Producto eliminado del carrito con éxito")
             return filtered;
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
     }
 }

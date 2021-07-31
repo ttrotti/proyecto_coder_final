@@ -125,7 +125,7 @@ if(cartForm) {
       prodId = document.getElementById('new-product-id').value
     
       const newItem = await addToCart(prodId);
-      console.log(newItem)
+      console.trace(newItem)
       updateCartList(newItem);
     });
 }

@@ -15,6 +15,8 @@ import CartFirebase from '../models/Carts/CartFirebase.js'
 import mongoose from 'mongoose';
 import admin from 'firebase-admin'
 
+import logger from '../lib/logger.js'
+
 export let Product;
 export let Cart;
 
@@ -46,13 +48,13 @@ switch(repository) {
         mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true });
         const connection = mongoose.connection;
         connection.once('open', () => {
-            console.log("MongoDB database connection established successfully");
+            logger.info("MongoDB database connection established successfully");
         });
         Product = ProductMongo
         Cart = CartMongo
     }
     catch(err) {
-        console.log(err)
+        logger.error(err)
     }
     break;
     case 7:
@@ -71,13 +73,13 @@ switch(repository) {
                 client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
             })
         });
-        console.log("connected to firebase")
+        logger.info("connected to firebase")
         const db = admin.firestore();
         Product = new ProductFirebase(db)
         Cart = new CartFirebase(db)
         }
         catch(err) {
-            console.log(err)
+            logger.error(err)
         }
 
     break;
