@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors'
+import passport from 'passport'
 import logger from './lib/logger.js'
 
 import productRouter from './routers/prodRouter.js'
@@ -13,6 +14,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 app.use(cors());
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/api/carrito', cartRouter);
 app.use('/api/productos', productRouter);
