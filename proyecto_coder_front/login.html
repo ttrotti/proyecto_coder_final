@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Log In</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    </head>
+    <body class="container">
+        <div id="error" class="d-none alert alert-danger p-3 m-4" role="alert"></div>
+            <form id="log-in-form">
+                <div class="form-group card bg-light m-4 p-3">
+                    <label for="name" class="pb-2">
+                        Nombre:
+                    </label>
+                    <input type="text" id="name" />
+
+                    <label for="lastname" class="pb-2">
+                        Apellido:
+                    </label>
+                    <input type="text" id="lastname" />
+
+                    <label for="email" class="pb-2">
+                        E-mail:
+                    </label>
+                    <input type="email" id="email" />
+
+                    <label for="phone" class="pb-2">
+                        Teléfono:
+                    </label>
+                    <input type="number" id="phone" />
+
+                    <label for="name" class="pb-2">
+                        Nombre:
+                    </label>
+                    <input type="text" id="name" />
+                </div>
+            </form>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <script src="app.js"></script>
+    </body>
+</html>
