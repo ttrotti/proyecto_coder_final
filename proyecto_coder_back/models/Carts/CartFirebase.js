@@ -53,7 +53,7 @@ class Cart {
                 cartObj.products.push(newItem)
                 await this.update(cartObj, cart[0].id)
             }
-            logger.trace("Producto añadido con éxito")
+            logger.info("Producto añadido con éxito")
             return await this.get()
         }
         catch(err) {
@@ -82,7 +82,7 @@ class Cart {
             if (!deleted) return false
             cartObj.products = cartObj.products.filter((product) => product.id !== productId)
             await this.update(cartObj, cartObj.id)
-            logger.trace("Producto eliminado del carrito con éxito")
+            logger.info("Producto eliminado del carrito con éxito")
             return deleted;
         }
         catch(err) {

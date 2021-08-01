@@ -1,6 +1,7 @@
 const BASE_URL = 'http://127.0.0.1:8080/api';
 const isAdmin = true;
 
+// ERRORS
 const error = document.getElementById('error');
 const notifyError = (err) => {
     error.classList.remove("d-none")
@@ -8,7 +9,27 @@ const notifyError = (err) => {
     error.innerHTML = `<p>${err.error}: ${err.description}</p>`
 }
 
-// PRODUCTS
+// CARDS
+const createCard = prod => {
+  const card = document.createElement('div');
+  card.className = 'card'
+  const cardTitle = document.createElement('div');
+  cardTitle.className = 'card-title m-1 p-3'
+  cardTitle.innerHTML = `Producto: ${prod.title}`
+  const cardBody = document.createElement('div');
+  cardBody.className = 'card-body'
+  cardBody.innerHTML = `Código: ${prod.code}<br>Descripción: ${prod.description}<br>Precio: ${prod.price}<br>Stock: ${prod.stock}`
+  const cardThumbnail = document.createElement('img');
+  cardThumbnail.setAttribute('src', `${prod.thumbnail}`)
+
+  card.appendChild(cardThumbnail);
+  card.appendChild(cardTitle);
+  card.appendChild(cardBody);
+
+  return card;
+};
+
+// PRODUCTOS
 
 async function getProducts () {
   try {
@@ -21,25 +42,6 @@ async function getProducts () {
   } catch (errors) {
     console.error(errors);
   }
-};
-
-const createCard = prod => {
-    const card = document.createElement('div');
-    card.className = 'card'
-    const cardTitle = document.createElement('div');
-    cardTitle.className = 'card-title m-1 p-3'
-    cardTitle.innerHTML = `Producto: ${prod.title}`
-    const cardBody = document.createElement('div');
-    cardBody.className = 'card-body'
-    cardBody.innerHTML = `ID: ${prod.id}<br>Descripción: ${prod.description}<br>Precio: ${prod.price}<br>Stock: ${prod.stock}`
-    const cardThumbnail = document.createElement('img');
-    cardThumbnail.setAttribute('src', `${prod.thumbnail}`)
-
-    card.appendChild(cardThumbnail);
-    card.appendChild(cardTitle);
-    card.appendChild(cardBody);
-  
-    return card;
 };
   
 const updateProductList = products => {
@@ -91,14 +93,14 @@ const addProduct = async product => {
     }
 };
 
-// CART 
+// CARRITO 
 
 async function getCart() {
     try {
       const response = await axios.get(`${BASE_URL}/carrito`);
       if(response.data.error) { notifyError(response.data); return }
   
-      const products = response.data.products;
+      const products = response.data[0].products;
   
       updateCartList(products)
     } catch (errors) {
@@ -125,7 +127,7 @@ if(cartForm) {
       prodId = document.getElementById('new-product-id').value
     
       const newItem = await addToCart(prodId);
-      console.trace(newItem)
+      console.info(newItem)
       updateCartList(newItem);
     });
 }
@@ -133,11 +135,58 @@ if(cartForm) {
 const addToCart = async prodId => {
     try {
         const response = await axios.post(`${BASE_URL}/carrito/${prodId}`);
-        if(response.data.error) { notifyError(response.data); return }
-        const newProduct = response.data.products[prodId - 1];
+        if(response.data[0].error) { notifyError(response.data); return }
+        const newProduct = response.data[0].products[0];
         if(newProduct) error.classList.add("d-none")
         return newProduct;
     } catch (errors) {
         console.error(errors);
     }
+};
+
+// USUARIOS 
+// // SIGN UP // //
+const signUpForm = document.getElementById('sign-up-form');
+if(signUpForm) {
+    signUpForm.addEventListener('submit', async e => {
+      e.preventDefault();
+
+      username = document.getElementById('username').value
+      firstName = document.getElementById('firstName').value
+      lastName = document.getElementById('lastName').value
+      email = document.getElementById('email').value
+      password = document.getElementById('password').value
+      age = document.getElementById('age').value
+      adress = document.getElementById('adress').value
+      telephone = document.getElementById('telephone').value
+
+      if(!username || !firstName || !lastName || !email || !password || !age || !adress || !telephone) {
+        return notifyError({error: 'Todos los campos son obligatorios'})
+      }
+
+      const user = {
+        username: username,
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        password: password,
+        age: age,
+        adress: adress,
+        telephone: telephone,
+      }
+    
+      const newUser = await registerUser(user);
+      if(!newUser) return notifyError({error: 'algo salió mal'})
+      window.location.href = "/proyecto_coder_front/index.html"
+    });
+}
+
+const registerUser = async user => {
+  try {
+    const response = await axios.post(`${BASE_URL}/signup`, user);
+    if(response.data.error) { notifyError(response.data); return }
+    return response.data
+  } catch (errors) {
+      console.error(errors);
+  }
 };

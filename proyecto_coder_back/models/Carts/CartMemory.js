@@ -35,7 +35,7 @@ class Cart {
             if(!newItem) return false
             CART.products.push(newItem)
 
-            logger.trace("Producto añadido al carrito con éxito")
+            logger.info("Producto añadido al carrito con éxito")
             return CART
         }
         catch(err) {
@@ -51,7 +51,7 @@ class Cart {
             CART.products = CART.products.filter((product) => product.id !== parseInt(productId));
 
 
-            logger.trace("Producto eliminado del carrito con éxito")
+            logger.info("Producto eliminado del carrito con éxito")
             return filtered;
         }
         catch(err) {

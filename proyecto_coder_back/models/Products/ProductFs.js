@@ -65,7 +65,7 @@ class Product {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(files, null, "\t")
             )
-            logger.trace("Producto guardado con éxito")
+            logger.info("Producto guardado con éxito")
             return data
         }
         catch(err) {
@@ -105,7 +105,7 @@ class Product {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(files, null, "\t")
             )
-            logger.trace("Producto borrado con éxito")
+            logger.info("Producto borrado con éxito")
             return filtered;
         }
         catch(err) {

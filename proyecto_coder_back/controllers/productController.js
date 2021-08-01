@@ -17,7 +17,7 @@ export class ProductController {
     }
     
     async get(req, res) {
-        const { id, title, code, minPrice, maxPrice , minStock, maxStock } = req.params
+        const { id, title, code, minPrice, maxPrice , minStock, maxStock } = req.query
         const data = await Product.get(id, title, code, minPrice, maxPrice , minStock, maxStock);
         if(!data || data.length < 1) {
             return res.json({

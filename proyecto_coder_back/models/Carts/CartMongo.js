@@ -72,7 +72,7 @@ class Cart {
             if (!deleted) return false
             cartObj.products = cartObj.products.filter((product) => product._id !== deleted._id);
             await this.update(cartObj, cartObj._id)
-            logger.trace("Producto eliminado del carrito con éxito")
+            logger.info("Producto eliminado del carrito con éxito")
             return deleted;
         }
         catch(err) {

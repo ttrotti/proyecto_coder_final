@@ -51,7 +51,7 @@ class Cart {
                 })
             }
             
-            logger.trace("Producto añadido al carrito con éxito")
+            logger.info("Producto añadido al carrito con éxito")
             return await this.get()
         }
         catch(err) {
@@ -71,7 +71,7 @@ class Cart {
             await db.table('cart').where({id: cartObj.id}).update({
                 products: cartObj.products
             })
-            logger.trace("Producto eliminado del carrito con éxito")
+            logger.info("Producto eliminado del carrito con éxito")
             return filtered;
         }
         catch(err) {

@@ -43,7 +43,7 @@ class Cart {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(cart, null, "\t")
             )
-            logger.trace("Producto añadido al carrito con éxito")
+            logger.info("Producto añadido al carrito con éxito")
             return cart
         }
         catch(err) {
@@ -64,7 +64,7 @@ class Cart {
             await fs.promises.writeFile(this.path,
                 JSON.stringify(cart, null, "\t")
             )
-            logger.trace("Producto eliminado del carrito con éxito")
+            logger.info("Producto eliminado del carrito con éxito")
             return filtered;
         }
         catch(err) {

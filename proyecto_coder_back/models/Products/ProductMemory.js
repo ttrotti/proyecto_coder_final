@@ -54,7 +54,7 @@ class Product {
             data.id = PRODUCTS.length + 1;
             data.timestamp = Date.now();
             PRODUCTS.push(data)
-            logger.trace("Producto guardado con éxito")
+            logger.info("Producto guardado con éxito")
             return data
         }
         catch(err) {
@@ -86,7 +86,7 @@ class Product {
     
             PRODUCTS = PRODUCTS.filter((product) => product.id !== parseInt(id));
 
-            logger.trace("Producto borrado con éxito")
+            logger.info("Producto borrado con éxito")
             return filtered;
         }
         catch(err) {
