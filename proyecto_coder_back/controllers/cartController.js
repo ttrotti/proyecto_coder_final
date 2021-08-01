@@ -1,9 +1,11 @@
 import { Cart } from './repoController.js'
+import logger from '../lib/logger.js'
 
 class CartController {
     async add (req, res) {
         if(!req.session.username) {
-            console.log(req.session.passport)
+            // log para revisar qué sesión llega
+            // logger.log(req.session)
             res.json({error: 'Debes estar logueado'})
         } else {
             const { id } = req.params;
