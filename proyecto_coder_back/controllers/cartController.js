@@ -2,14 +2,19 @@ import { Cart } from './repoController.js'
 
 class CartController {
     async add (req, res) {
-        const { id } = req.params;
-        const newData = await Cart.add(id);
-        if(!newData) {
-            return res.json({
-                error: "producto no encontrado"
-            })
+        if(!req.session.username) {
+            console.log(req.session.passport)
+            res.json({error: 'Debes estar logueado'})
+        } else {
+            const { id } = req.params;
+            const newData = await Cart.add(id);
+            if(!newData) {
+                return res.json({
+                    error: "producto no encontrado"
+                })
+            }
+            res.status(201).json(newData)
         }
-        res.status(201).json(newData)
     }
     
     async get(req, res) {

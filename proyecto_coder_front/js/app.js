@@ -127,7 +127,8 @@ if(cartForm) {
       prodId = document.getElementById('new-product-id').value
     
       const newItem = await addToCart(prodId);
-      console.info(newItem)
+      console.log(newItem)
+      if(!newItem) return
       updateCartList(newItem);
     });
 }
@@ -135,7 +136,7 @@ if(cartForm) {
 const addToCart = async prodId => {
     try {
         const response = await axios.post(`${BASE_URL}/carrito/${prodId}`);
-        if(response.data[0].error) { notifyError(response.data); return }
+        if(response.data.error) { notifyError(response.data); return }
         const newProduct = response.data[0].products[0];
         if(newProduct) error.classList.add("d-none")
         return newProduct;
@@ -161,7 +162,8 @@ if(signUpForm) {
       telephone = document.getElementById('telephone').value
 
       if(!username || !firstName || !lastName || !email || !password || !age || !adress || !telephone) {
-        return notifyError({error: 'Todos los campos son obligatorios'})
+        notifyError({error: 'Todos los campos son obligatorios'})
+        return
       }
 
       const user = {
@@ -176,8 +178,8 @@ if(signUpForm) {
       }
     
       const newUser = await registerUser(user);
-      if(!newUser) return notifyError({error: 'algo salió mal'})
-      window.location.href = "/proyecto_coder_front/index.html"
+      if(!newUser) { notifyError({error: 'algo salió mal'}); return }
+      window.location.href = "/proyecto_coder_front/carrito.html"
     });
 }
 

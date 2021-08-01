@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors'
 import logger from './lib/logger.js'
+import cookieParser from 'cookie-parser';
+import session from 'express-session';
+import MongoStore from 'connect-mongo'
+
 
 import productRouter from './routers/prodRouter.js'
 import cartRouter from './routers/cartRouter.js'
@@ -15,9 +19,20 @@ import dotenv from 'dotenv';
 dotenv.config()
 
 const app = express();
-
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cookieParser(process.env.COOKIESECRET))
+app.use(session({
+    store: MongoStore.create({  
+        mongoUrl: `${process.env.MONGO_URI}`, 
+        ttl: 600
+    }),
+    secret: process.env.SESSIONSECRET,
+    resave: false,
+    saveUninitialized: false,
+}))
+app.use(passport.initialize());
+app.use(passport.session())
 app.use(cors());
 
 app.use(passport.initialize());
