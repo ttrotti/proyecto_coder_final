@@ -17,31 +17,35 @@
         </div>
         <form id="new-product-form">
             <div class="form-group card bg-light m-4 p-3">
-                <label class="pb-2">
+                <label for="title" class="pb-2">
                     Title:
                     <input type="text" id="title" />
                 </label>
-                <label class="pb-2">
+                <label for="price" class="pb-2">
                     Price:
                     <input type="number" id="price" />
                 </label>
-                <label class="pb-2">
+                <label for="thumbnail" class="pb-2">
                     Thumbnail:
                     <input type="text" id="thumbnail" />
                 </label>
-                <label class="pb-2">
+                <label for="stock" class="pb-2">
                     Stock:
                     <input type="number" id="stock" />
                 </label>
-                <label class="pb-2">
+                <label for="description" class="pb-2">
                     Descripción:
                     <input type="text" id="description" />
+                </label>
+                <label for="code" class="pb-2">
+                    Código:
+                    <input type="text" id="code" />
                 </label>
                 <button class="btn btn-primary" type="submit">Enviar</button>
             </div>
         </form>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="./js/app.js"></script>
+        <script src="js/app.js"></script>
         <script>
             getProducts()
         </script>

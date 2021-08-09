@@ -4,7 +4,8 @@ import logger from './lib/logger.js'
 import cookieParser from 'cookie-parser';
 import session from 'express-session';
 import MongoStore from 'connect-mongo'
-
+import path from 'path';
+const __dirname = path.resolve();
 
 import productRouter from './routers/prodRouter.js'
 import cartRouter from './routers/cartRouter.js'
@@ -34,14 +35,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session())
 app.use(cors());
-
-app.use(passport.initialize());
-app.use(passport.session());
-
-app.use('/api/carrito', cartRouter);
-app.use('/api/productos', productRouter);
-app.use('/api', userRouter);
-
 
 // PASSPORT
 const LocalStrategy = passportLocal.Strategy
@@ -128,6 +121,12 @@ passport.deserializeUser(function(id, done) {
         done(err, user)
     })
 })
+
+// ROUTES 
+app.use(express.static(path.join(__dirname, 'public')));
+app.use('/api/carrito', cartRouter);
+app.use('/api/productos', productRouter);
+app.use('/', userRouter);
 
 const PORT = 8080;
 app.listen(PORT, () => {

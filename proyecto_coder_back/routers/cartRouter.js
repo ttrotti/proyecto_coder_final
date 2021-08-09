@@ -3,7 +3,9 @@ import cartController from '../controllers/cartController.js'
 
 const router = express.Router();
 
-router.get('/:id?', cartController.get);
+router.post('/place-order', cartController.placeOrder)
+
+router.get('/', cartController.get);
 router.post('/:id', cartController.add);
 router.delete('/:id', cartController.delete);
 

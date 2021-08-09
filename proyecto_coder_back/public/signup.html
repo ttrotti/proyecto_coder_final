@@ -1,5 +1,3 @@
-<!-- En la clase 9 está explicado cómo subir el avatar al server -->
-<!-- registro exitoso envía mail al admin -->
 <!DOCTYPE html>
 <html>
     <head>
@@ -50,12 +48,15 @@
                     </label>
                     <input class="mb-3" type="number" id="telephone"/>
 
-                    <!-- Falta agregar lo del avatar -->
+                    <label for="profilePicture">
+                        Avatar:
+                    </label>
+                    <input class="mb-3" type="file" name="profilePicture">
 
                     <button class="btn btn-success" type="submit">Enviar</button>
                 </div>
             </form>
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="./js/app.js"></script>
+        <script src="js/app.js"></script>
     </body>
 </html>

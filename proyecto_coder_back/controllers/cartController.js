@@ -3,13 +3,12 @@ import logger from '../lib/logger.js'
 
 class CartController {
     async add (req, res) {
-        if(!req.session.username) {
-            // log para revisar qué sesión llega
-            // logger.log(req.session)
+        const username = req.user.username
+        if(!username) {
             res.json({error: 'Debes estar logueado'})
         } else {
-            const { id } = req.params;
-            const newData = await Cart.add(id);
+            const { productId } = req.params;
+            const newData = await Cart.add(productId, username);
             if(!newData) {
                 return res.json({
                     error: "producto no encontrado"
@@ -20,8 +19,8 @@ class CartController {
     }
     
     async get(req, res) {
-        const { id } = req.params;
-        const data = await Cart.get(id);
+        const { owner, id } = req.query
+        const data = await Cart.get(owner, id);
         if(!data || data.length < 1) {
             return res.json({
                 error: "No hay archivos cargados"
@@ -31,14 +30,26 @@ class CartController {
     }
 
     async delete(req, res) {
-        const { id } = req.params;
-        const deletedProduct = await Cart.delete(id)
+        const { productId } = req.params;
+        const deletedProduct = await Cart.delete(productId)
         if(!deletedProduct) {
             return res.json({
                 error: "producto no encontrado"
             })
         }
         res.json(deletedProduct);
+    }
+
+    async placeOrder(req, res) {
+        const { username, id } = req.body;
+        console.log(username)
+        const data = await Cart.placeOrder(username);
+        if(!data) {
+            return res.json({
+                error: "ha ocurrido un error"
+            })
+        }
+        res.json(data)
     }
 }
 

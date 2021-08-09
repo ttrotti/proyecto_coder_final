@@ -36,8 +36,8 @@ class Product {
         try {
             if(minStock && maxStock) return products.find({stock: { $gt: minStock, $lt: maxStock }})
             if(minPrice && maxPrice) return products.find({price: { $gt: minPrice, $lt: maxPrice }})
-            if(code) return products.find({code: code}, {code: 1, _id: 0})
-            if(title) return products.find({title: title}, {title: 1, _id: 0})
+            if(code) return products.find({code: code})
+            if(title) return products.find({title: title})
             if(id) return products.findById(id)
             return products.find({})
         }
@@ -65,9 +65,15 @@ class Product {
             }
             // esto lo mantengo solo para el env de prueba
             product.thumbnail = "https://cdn3.iconfinder.com/data/icons/education-209/64/globe-earth-geograhy-planet-school-512.png"
-            
-            await products(product).save()
-            return product
+
+            const codeIsUnique = await products.find({code: product.code})
+
+            if(!codeIsUnique.length) {
+                await products(product).save()
+                return product
+            } else {
+                return {error: "El producto ya existe"}
+            }
         }
         catch(err) {
             logger.error(err)

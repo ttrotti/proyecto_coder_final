@@ -1,51 +1,8 @@
-import nodemailer from 'nodemailer'
 import {User} from '../models/User.js'
 import logger from '../lib/logger.js';
-
-// //EMAILS
-// const transporter = nodemailer.createTransport({
-//     host: 'smtp.ethereal.email',
-//     port: 587,
-//     auth: {
-//         user: 'cordell36@ethereal.email',
-//         pass: 'vz4PfkfHY5zQqtWeVm'
-//     }
-// });
-
-// const gmailTransporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//         user: process.env.GMAIL_USER,
-//         pass: process.env.GMAIL_PASS
-//     }
-// })
-
-// const sendEmail = async (username, action) => {
-//     await User.findOne({username: username}, (err, docs) => {
-//         if(err) {
-//             console.log(err)
-//         } else {
-//             const mailOptions = {
-//                 from: 'Servidor Node.js',
-//                 to: `${docs.email}`,
-//                 subject: `${action} a nuestra web`,
-//                 html: `<h1>Hola ${docs.firstName}</h1><br><p>Te logeaste a nuestra app el ${new Date()}</p>`
-//             }
-//             transporter.sendMail(mailOptions, (err, info) => {
-//                 if(err) {
-//                     console.log(err)
-//                     return err
-//                 }
-//             }) 
-//             gmailTransporter.sendMail(mailOptions, (err, info) => {
-//                 if(err) {
-//                     console.log(err)
-//                     return err
-//                 }
-//             }) 
-//         }
-//     });
-// }
+import path from 'path';
+import { sendMail } from '../lib/mailer.js'
+const __dirname = path.resolve();
 
 // CONTROLLER
 
@@ -57,34 +14,42 @@ class userController {
         }
         req.session.password = req.body.password
         req.session.username = username
+        sendMail(username, 'login')
+        res.json()
+    }
 
-        sendEmail(username, 'Log In')
+    async showLogin(req, res) {
+        if(req.session.username) return
+        res.sendFile(path.join(__dirname, './public/login.html'))
     }
 
     async signup(req, res) {
         const username = req.user.username;
-        if(!username) {
-            return res.json({
-                error: "Debes agregar un nombre de usuario"
-            })
-        }
-        req.session.password = req.user.password
-        req.session.username = username
-        req.session.email = req.user.email
-        // sendEmail(username, 'Sign Up')
+        sendMail(username, 'signup')
         const newUser = await User.findOne({username: username}, {_id: 0, password: 0, __v: 0})
         if(!newUser) {
             return res.json({
                 error: "Algo salió mal"
             })
+        } else {
+            logger.info(`Usuario ${username} creado con éxito`)
+            return res.json(newUser)
         }
-        res.json(newUser)
+    }
+
+    showSignUp(req, res) {
+        res.sendFile(path.join(__dirname, './public/signup.html'))
+    }
+
+    showHome(req, res) {
+        return res.sendFile(path.join(__dirname, './public/home.html'))
     }
 
     logout(req, res) {
         const username = req.session.username;
+        sendMail(username, 'logout')
         req.session.destroy();
-        sendEmail(username, 'Log Out')
+        return res.json(`${username} just logged out`)
     }
 }
 
